@@ -38,14 +38,23 @@ namespace ProyectoDiagnosticoDesktop
             this.LBLApellidoMat = new System.Windows.Forms.Label();
             this.CBSexo = new System.Windows.Forms.ComboBox();
             this.LBLSexo = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.DTPFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.LBLFechaNacimiento = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CBNacionalidad = new System.Windows.Forms.ComboBox();
             this.GBDatosPersonales = new System.Windows.Forms.GroupBox();
+            this.LBLNacionalidad = new System.Windows.Forms.Label();
             this.TXBId = new System.Windows.Forms.TextBox();
             this.LBLId = new System.Windows.Forms.Label();
             this.BTNCancelar = new System.Windows.Forms.Button();
+            this.LBLRFC = new System.Windows.Forms.Label();
+            this.TXBTelefono = new System.Windows.Forms.TextBox();
+            this.LBLTelefono = new System.Windows.Forms.Label();
+            this.GBDatosFiscales = new System.Windows.Forms.GroupBox();
+            this.TXBEmail = new System.Windows.Forms.TextBox();
+            this.LBLEmail = new System.Windows.Forms.Label();
+            this.TXBRFC = new System.Windows.Forms.TextBox();
             this.GBDatosPersonales.SuspendLayout();
+            this.GBDatosFiscales.SuspendLayout();
             this.SuspendLayout();
             // 
             // LBLNombre
@@ -124,13 +133,13 @@ namespace ProyectoDiagnosticoDesktop
             this.LBLSexo.TabIndex = 8;
             this.LBLSexo.Text = "Sexo";
             // 
-            // dateTimePicker1
+            // DTPFechaNacimiento
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(156, 74);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(114, 20);
-            this.dateTimePicker1.TabIndex = 9;
+            this.DTPFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.DTPFechaNacimiento.Location = new System.Drawing.Point(156, 74);
+            this.DTPFechaNacimiento.Name = "DTPFechaNacimiento";
+            this.DTPFechaNacimiento.Size = new System.Drawing.Size(114, 20);
+            this.DTPFechaNacimiento.TabIndex = 9;
             // 
             // LBLFechaNacimiento
             // 
@@ -141,24 +150,25 @@ namespace ProyectoDiagnosticoDesktop
             this.LBLFechaNacimiento.TabIndex = 10;
             this.LBLFechaNacimiento.Text = "Fecha de Nacimiento";
             // 
-            // comboBox1
+            // CBNacionalidad
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(289, 74);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 11;
+            this.CBNacionalidad.FormattingEnabled = true;
+            this.CBNacionalidad.Location = new System.Drawing.Point(289, 74);
+            this.CBNacionalidad.Name = "CBNacionalidad";
+            this.CBNacionalidad.Size = new System.Drawing.Size(121, 21);
+            this.CBNacionalidad.TabIndex = 11;
             // 
             // GBDatosPersonales
             // 
             this.GBDatosPersonales.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GBDatosPersonales.Controls.Add(this.LBLNacionalidad);
             this.GBDatosPersonales.Controls.Add(this.TXBNombre);
-            this.GBDatosPersonales.Controls.Add(this.comboBox1);
+            this.GBDatosPersonales.Controls.Add(this.CBNacionalidad);
             this.GBDatosPersonales.Controls.Add(this.LBLNombre);
             this.GBDatosPersonales.Controls.Add(this.LBLFechaNacimiento);
             this.GBDatosPersonales.Controls.Add(this.LBLApellidoPat);
-            this.GBDatosPersonales.Controls.Add(this.dateTimePicker1);
+            this.GBDatosPersonales.Controls.Add(this.DTPFechaNacimiento);
             this.GBDatosPersonales.Controls.Add(this.TXBApellidoPat);
             this.GBDatosPersonales.Controls.Add(this.LBLSexo);
             this.GBDatosPersonales.Controls.Add(this.LBLApellidoMat);
@@ -170,6 +180,15 @@ namespace ProyectoDiagnosticoDesktop
             this.GBDatosPersonales.TabIndex = 12;
             this.GBDatosPersonales.TabStop = false;
             this.GBDatosPersonales.Text = "Datos Personales";
+            // 
+            // LBLNacionalidad
+            // 
+            this.LBLNacionalidad.AutoSize = true;
+            this.LBLNacionalidad.Location = new System.Drawing.Point(286, 58);
+            this.LBLNacionalidad.Name = "LBLNacionalidad";
+            this.LBLNacionalidad.Size = new System.Drawing.Size(69, 13);
+            this.LBLNacionalidad.TabIndex = 12;
+            this.LBLNacionalidad.Text = "Nacionalidad";
             // 
             // TXBId
             // 
@@ -199,11 +218,77 @@ namespace ProyectoDiagnosticoDesktop
             this.BTNCancelar.UseVisualStyleBackColor = true;
             this.BTNCancelar.Click += new System.EventHandler(this.BTNCancelar_Click);
             // 
+            // LBLRFC
+            // 
+            this.LBLRFC.AutoSize = true;
+            this.LBLRFC.Location = new System.Drawing.Point(12, 21);
+            this.LBLRFC.Name = "LBLRFC";
+            this.LBLRFC.Size = new System.Drawing.Size(28, 13);
+            this.LBLRFC.TabIndex = 13;
+            this.LBLRFC.Text = "RFC";
+            // 
+            // TXBTelefono
+            // 
+            this.TXBTelefono.Location = new System.Drawing.Point(27, 292);
+            this.TXBTelefono.Name = "TXBTelefono";
+            this.TXBTelefono.Size = new System.Drawing.Size(233, 20);
+            this.TXBTelefono.TabIndex = 16;
+            // 
+            // LBLTelefono
+            // 
+            this.LBLTelefono.AutoSize = true;
+            this.LBLTelefono.Location = new System.Drawing.Point(24, 276);
+            this.LBLTelefono.Name = "LBLTelefono";
+            this.LBLTelefono.Size = new System.Drawing.Size(49, 13);
+            this.LBLTelefono.TabIndex = 15;
+            this.LBLTelefono.Text = "Telefono";
+            // 
+            // GBDatosFiscales
+            // 
+            this.GBDatosFiscales.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GBDatosFiscales.Controls.Add(this.TXBRFC);
+            this.GBDatosFiscales.Controls.Add(this.LBLRFC);
+            this.GBDatosFiscales.Location = new System.Drawing.Point(12, 187);
+            this.GBDatosFiscales.Name = "GBDatosFiscales";
+            this.GBDatosFiscales.Size = new System.Drawing.Size(695, 79);
+            this.GBDatosFiscales.TabIndex = 17;
+            this.GBDatosFiscales.TabStop = false;
+            this.GBDatosFiscales.Text = "Datos Fiscales";
+            // 
+            // TXBEmail
+            // 
+            this.TXBEmail.Location = new System.Drawing.Point(266, 292);
+            this.TXBEmail.Name = "TXBEmail";
+            this.TXBEmail.Size = new System.Drawing.Size(233, 20);
+            this.TXBEmail.TabIndex = 19;
+            // 
+            // LBLEmail
+            // 
+            this.LBLEmail.AutoSize = true;
+            this.LBLEmail.Location = new System.Drawing.Point(263, 276);
+            this.LBLEmail.Name = "LBLEmail";
+            this.LBLEmail.Size = new System.Drawing.Size(32, 13);
+            this.LBLEmail.TabIndex = 18;
+            this.LBLEmail.Text = "Email";
+            // 
+            // TXBRFC
+            // 
+            this.TXBRFC.Location = new System.Drawing.Point(15, 38);
+            this.TXBRFC.Name = "TXBRFC";
+            this.TXBRFC.Size = new System.Drawing.Size(175, 20);
+            this.TXBRFC.TabIndex = 14;
+            // 
             // Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(721, 450);
+            this.Controls.Add(this.TXBEmail);
+            this.Controls.Add(this.LBLEmail);
+            this.Controls.Add(this.GBDatosFiscales);
+            this.Controls.Add(this.TXBTelefono);
+            this.Controls.Add(this.LBLTelefono);
             this.Controls.Add(this.BTNGuardar);
             this.Controls.Add(this.BTNCancelar);
             this.Controls.Add(this.TXBId);
@@ -214,6 +299,8 @@ namespace ProyectoDiagnosticoDesktop
             this.Load += new System.EventHandler(this.Cliente_Load);
             this.GBDatosPersonales.ResumeLayout(false);
             this.GBDatosPersonales.PerformLayout();
+            this.GBDatosFiscales.ResumeLayout(false);
+            this.GBDatosFiscales.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,12 +317,20 @@ namespace ProyectoDiagnosticoDesktop
         private System.Windows.Forms.Label LBLApellidoMat;
         private System.Windows.Forms.ComboBox CBSexo;
         private System.Windows.Forms.Label LBLSexo;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker DTPFechaNacimiento;
         private System.Windows.Forms.Label LBLFechaNacimiento;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox CBNacionalidad;
         private System.Windows.Forms.GroupBox GBDatosPersonales;
         private System.Windows.Forms.TextBox TXBId;
         private System.Windows.Forms.Label LBLId;
         private System.Windows.Forms.Button BTNCancelar;
+        private System.Windows.Forms.Label LBLNacionalidad;
+        private System.Windows.Forms.Label LBLRFC;
+        private System.Windows.Forms.TextBox TXBTelefono;
+        private System.Windows.Forms.Label LBLTelefono;
+        private System.Windows.Forms.GroupBox GBDatosFiscales;
+        private System.Windows.Forms.TextBox TXBEmail;
+        private System.Windows.Forms.Label LBLEmail;
+        private System.Windows.Forms.TextBox TXBRFC;
     }
 }

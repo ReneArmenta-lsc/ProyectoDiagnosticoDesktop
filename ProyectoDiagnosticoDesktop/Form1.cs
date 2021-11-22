@@ -16,6 +16,8 @@ namespace ProyectoDiagnosticoDesktop
         private string conString = @"data source=AXEL\SQLEXPRESS;initial catalog = 'ProyectoDiagnostico'; persist security info = True;Integrated Security = SSPI;";
         SqlConnection sql;
 
+        private int RowSeleccionado = -1;
+
         public Form1()
         {
             InitializeComponent();
@@ -41,6 +43,7 @@ namespace ProyectoDiagnosticoDesktop
             SqlCommand command = new SqlCommand("ClienteBuscar", sql);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter("@Text", "%"+TXBBuscar.Text+"%"));
+            command.Parameters.Add(new SqlParameter("@MostrarEliminados", CHBMostrarEliminados.Checked));
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
@@ -49,9 +52,24 @@ namespace ProyectoDiagnosticoDesktop
                 {
                     DataGridViewRow row = (DataGridViewRow)DGVClientes.Rows[0].Clone();
 
-                    for (int i = 0; i < DGVClientes.Columns.Count; i++)
+                    row.Cells[DGVClientes.Columns["Id"].Index].Value = reader.GetValue(reader.GetOrdinal("Id"));
+                    row.Cells[DGVClientes.Columns["Nombres"].Index].Value = reader.GetValue(reader.GetOrdinal("Nombres"));
+                    row.Cells[DGVClientes.Columns["ApellidoPaterno"].Index].Value = reader.GetValue(reader.GetOrdinal("ApellidoPaterno"));
+                    row.Cells[DGVClientes.Columns["ApellidoMaterno"].Index].Value = reader.GetValue(reader.GetOrdinal("ApellidoMaterno"));
+                    row.Cells[DGVClientes.Columns["Sexo"].Index].Value = reader.GetValue(reader.GetOrdinal("SexoNombre"));
+                    row.Cells[DGVClientes.Columns["FechaNacimiento"].Index].Value = reader.GetValue(reader.GetOrdinal("FechaNacimiento"));
+                    row.Cells[DGVClientes.Columns["Nacionalidad"].Index].Value = reader.GetValue(reader.GetOrdinal("NacionalidadNombre"));
+                    row.Cells[DGVClientes.Columns["Activo"].Index].Value = reader.GetBoolean(reader.GetOrdinal("Activo"));
+
+                    if (!Convert.ToBoolean(row.Cells[8].Value))
                     {
-                        row.Cells[i].Value = reader.GetValue(i).ToString();
+                        
+                        row.DefaultCellStyle.BackColor = Color.LightGray;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        row.Cells[7].Value = "Eliminar";
                     }
                     DGVClientes.Rows.Add(row);
                 }
@@ -65,16 +83,14 @@ namespace ProyectoDiagnosticoDesktop
         {
             if (e.RowIndex >= 0)
             {
-                Cliente cliente = new Cliente(conString,int.Parse(DGVClientes.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                Cliente cliente = new Cliente(sql,int.Parse(DGVClientes.Rows[e.RowIndex].Cells[0].Value.ToString()));
                 cliente.ShowDialog();
             }
         }
 
         private void BTNAgregar_Click(object sender, EventArgs e)
         {
-
-
-            Cliente cliente = new Cliente(conString,IdActual());
+            Cliente cliente = new Cliente(sql,IdActual());
             cliente.ShowDialog();
 
             Buscar();
@@ -82,9 +98,45 @@ namespace ProyectoDiagnosticoDesktop
 
         private int IdActual()
         {
-            int id = 0;
+
+            sql.Open();
+            SqlCommand command = new SqlCommand("ClienteIdActual", sql);
+            command.CommandType = CommandType.StoredProcedure;
+            int id = int.Parse(command.ExecuteScalar().ToString()) + 1;
+            sql.Close();
 
             return id;        
+        }
+
+        private void DGVClientes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (RowSeleccionado == e.RowIndex || e.ColumnIndex > 6) return;
+            RowSeleccionado = e.RowIndex;
+
+            if (RowSeleccionado >= 0)
+            {
+                var cell = DGVClientes.PointToClient(Cursor.Position);
+                toolTip1.Show("Doble clic para editar", DGVClientes,cell.X, cell.Y, 1000);
+            }
+            
+        }
+
+        private void DGVClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                if (Convert.ToBoolean(senderGrid.Rows[e.RowIndex].Cells[8].Value))
+                {
+                    MessageBox.Show("Desea eliminar a " + senderGrid.Rows[e.RowIndex].Cells[1].Value.ToString(), "Confirme", MessageBoxButtons.YesNo);
+                }
+            }
+        }
+
+        private void CHBMostrarEliminados_CheckedChanged(object sender, EventArgs e)
+        {
+            Buscar();
         }
     }
 }
