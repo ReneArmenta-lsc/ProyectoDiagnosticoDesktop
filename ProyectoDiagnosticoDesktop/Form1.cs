@@ -64,7 +64,8 @@ namespace ProyectoDiagnosticoDesktop
                     if (!Convert.ToBoolean(row.Cells[8].Value))
                     {
                         
-                        row.DefaultCellStyle.BackColor = Color.LightGray;
+                        row.DefaultCellStyle.BackColor = Color.Gray;
+                        row.Cells[7].Value = "Restaurar";
                     }
                     else
                     {
@@ -129,14 +130,50 @@ namespace ProyectoDiagnosticoDesktop
             {
                 if (Convert.ToBoolean(senderGrid.Rows[e.RowIndex].Cells[8].Value))
                 {
-                    MessageBox.Show("Desea eliminar a " + senderGrid.Rows[e.RowIndex].Cells[1].Value.ToString(), "Confirme", MessageBoxButtons.YesNo);
+                    if (MessageBox.Show("Desea eliminar a " + senderGrid.Rows[e.RowIndex].Cells[1].Value.ToString(), "Confirme", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        int id = int.Parse(senderGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
+                        EliminarCliente(id);
+                        Buscar();
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show("Desea restaurar a " + senderGrid.Rows[e.RowIndex].Cells[1].Value.ToString(), "Confirme", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        int id = int.Parse(senderGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
+                        RestaurarCliente(id);
+                        Buscar();
+                    }
                 }
             }
+        }
+
+        private void EliminarCliente(int id)
+        {
+            sql.Open();
+            SqlCommand command = new SqlCommand("ClienteEliminar", sql);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", id));
+            command.ExecuteNonQuery();
+            sql.Close();
+        }
+
+        private void RestaurarCliente(int id)
+        {
+            sql.Open();
+            SqlCommand command = new SqlCommand("ClienteRestaurar", sql);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@Id", id));
+            command.ExecuteNonQuery();
+            sql.Close();
         }
 
         private void CHBMostrarEliminados_CheckedChanged(object sender, EventArgs e)
         {
             Buscar();
         }
+
+        
     }
 }

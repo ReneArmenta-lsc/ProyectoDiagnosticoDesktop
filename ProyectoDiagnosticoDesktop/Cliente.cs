@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,22 +33,57 @@ namespace ProyectoDiagnosticoDesktop
 
         private void BTNGuardar_Click(object sender, EventArgs e)
         {
-            if (Validar())
+            if (ValidarCliente())
             {
                 GuardarCliente();
+                Close();
             }
         }
 
-        private bool Validar()
+        private bool ValidarCliente()
         {
             string nombre = TXBNombre.Text.Trim();
-            if (nombre.Length == 0)
+            if (!ValidarTexto("Nombre", nombre,true)) return false;
+
+            string apellidoPat = TXBApellidoPat.Text.Trim();
+            if (!ValidarTexto("Apellido Paterno", apellidoPat,true)) return false;
+
+            string apellidoMat = TXBApellidoMat.Text.Trim();
+            if (!ValidarTexto("Apellido Materno", apellidoMat,true)) return false;
+
+            if (!ValidarFecha(DTPFechaNacimiento.Value,true)) return false;
+
+            return true;
+        }
+
+        private bool ValidarTexto(string nombre ,string text,bool mensajes)
+        {
+           
+            if (text.Length == 0)
             {
-                MessageBox.Show("El campo Nombre no puede estar vacio");
+                if (mensajes) MessageBox.Show(string.Format("El campo {0} no puede estar vacio", nombre));
                 return false;
             }
 
-            return true;   
+            if (!Regex.IsMatch(text, @"^[a-zA-Z]+$"))
+            {
+                if (mensajes) MessageBox.Show(string.Format("El campo {0} no puede contener numeros ni caracteres especiales",nombre));
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidarFecha(DateTime fecha, bool mensajes)
+        {
+            DateTime ahora = DateTime.Now;
+            if (ahora.AddYears(-18) < fecha)
+            {
+                if (mensajes) MessageBox.Show(string.Format("Fecha de nacimiento no valida, el cliente debe ser mayor de edad"));
+                return false;
+            }
+            
+            return true;
         }
 
         private void CargarCliente()
@@ -120,12 +156,73 @@ namespace ProyectoDiagnosticoDesktop
 
         private void GuardarCliente()
         {
-
+            sql.Open();
+            SqlCommand command = new SqlCommand("Clienteguardar", sql);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@Nombre", TXBNombre.Text));
+            command.Parameters.Add(new SqlParameter("@ApellidoPat", TXBApellidoPat.Text));
+            command.Parameters.Add(new SqlParameter("@ApellidoMat", TXBApellidoMat.Text));
+            command.Parameters.Add(new SqlParameter("@Sexo", CBSexo.SelectedValue));
+            command.Parameters.Add(new SqlParameter("@FechaNacimiento", DTPFechaNacimiento.Value));
+            command.Parameters.Add(new SqlParameter("@Nacionalidad", CBNacionalidad.SelectedValue));
+            command.Parameters.Add(new SqlParameter("@RFC", TXBRFC.Text));
+            command.Parameters.Add(new SqlParameter("@Telefono", TXBTelefono.Text));
+            command.Parameters.Add(new SqlParameter("@Email", TXBEmail.Text));
+            command.ExecuteNonQuery();
+            sql.Close();
         }
 
         private void BTNCancelar_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void TXBNombre_TextChanged(object sender, EventArgs e)
+        {
+            if (!ValidarTexto("", TXBNombre.Text.Trim(), false))
+            {
+                TXBNombre.BackColor = Color.Crimson;
+            }
+            else
+            {
+                TXBNombre.BackColor = Color.White;
+            }
+        }
+
+        private void TXBApellidoPat_TextChanged(object sender, EventArgs e)
+        {
+            if (!ValidarTexto("", TXBApellidoPat.Text.Trim(), false))
+            {
+                TXBApellidoPat.BackColor = Color.Crimson;
+            }
+            else
+            {
+                TXBApellidoPat.BackColor = Color.White;
+            }
+        }
+
+        private void TXBApellidoMat_TextChanged(object sender, EventArgs e)
+        {
+            if (!ValidarTexto("", TXBApellidoMat.Text.Trim(), false))
+            {
+                TXBApellidoMat.BackColor = Color.Crimson;
+            }
+            else
+            {
+                TXBApellidoMat.BackColor = Color.White;
+            }
+        }
+
+        private void DTPFechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+            if (!ValidarFecha(DTPFechaNacimiento.Value, false))
+            {
+                panel1.BackColor = Color.Crimson;
+            }
+            else
+            {
+                panel1.BackColor = SystemColors.Control;
+            }
         }
     }
 }

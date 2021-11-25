@@ -50,11 +50,13 @@ namespace ProyectoDiagnosticoDesktop
             this.TXBTelefono = new System.Windows.Forms.TextBox();
             this.LBLTelefono = new System.Windows.Forms.Label();
             this.GBDatosFiscales = new System.Windows.Forms.GroupBox();
+            this.TXBRFC = new System.Windows.Forms.TextBox();
             this.TXBEmail = new System.Windows.Forms.TextBox();
             this.LBLEmail = new System.Windows.Forms.Label();
-            this.TXBRFC = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.GBDatosPersonales.SuspendLayout();
             this.GBDatosFiscales.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // LBLNombre
@@ -83,6 +85,7 @@ namespace ProyectoDiagnosticoDesktop
             this.TXBNombre.Name = "TXBNombre";
             this.TXBNombre.Size = new System.Drawing.Size(233, 20);
             this.TXBNombre.TabIndex = 2;
+            this.TXBNombre.TextChanged += new System.EventHandler(this.TXBNombre_TextChanged);
             // 
             // TXBApellidoPat
             // 
@@ -90,6 +93,7 @@ namespace ProyectoDiagnosticoDesktop
             this.TXBApellidoPat.Name = "TXBApellidoPat";
             this.TXBApellidoPat.Size = new System.Drawing.Size(206, 20);
             this.TXBApellidoPat.TabIndex = 4;
+            this.TXBApellidoPat.TextChanged += new System.EventHandler(this.TXBApellidoPat_TextChanged);
             // 
             // LBLApellidoPat
             // 
@@ -106,6 +110,7 @@ namespace ProyectoDiagnosticoDesktop
             this.TXBApellidoMat.Name = "TXBApellidoMat";
             this.TXBApellidoMat.Size = new System.Drawing.Size(206, 20);
             this.TXBApellidoMat.TabIndex = 6;
+            this.TXBApellidoMat.TextChanged += new System.EventHandler(this.TXBApellidoMat_TextChanged);
             // 
             // LBLApellidoMat
             // 
@@ -136,10 +141,11 @@ namespace ProyectoDiagnosticoDesktop
             // DTPFechaNacimiento
             // 
             this.DTPFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DTPFechaNacimiento.Location = new System.Drawing.Point(156, 74);
+            this.DTPFechaNacimiento.Location = new System.Drawing.Point(3, 3);
             this.DTPFechaNacimiento.Name = "DTPFechaNacimiento";
             this.DTPFechaNacimiento.Size = new System.Drawing.Size(114, 20);
             this.DTPFechaNacimiento.TabIndex = 9;
+            this.DTPFechaNacimiento.ValueChanged += new System.EventHandler(this.DTPFechaNacimiento_ValueChanged);
             // 
             // LBLFechaNacimiento
             // 
@@ -162,13 +168,13 @@ namespace ProyectoDiagnosticoDesktop
             // 
             this.GBDatosPersonales.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GBDatosPersonales.Controls.Add(this.panel1);
             this.GBDatosPersonales.Controls.Add(this.LBLNacionalidad);
             this.GBDatosPersonales.Controls.Add(this.TXBNombre);
             this.GBDatosPersonales.Controls.Add(this.CBNacionalidad);
             this.GBDatosPersonales.Controls.Add(this.LBLNombre);
             this.GBDatosPersonales.Controls.Add(this.LBLFechaNacimiento);
             this.GBDatosPersonales.Controls.Add(this.LBLApellidoPat);
-            this.GBDatosPersonales.Controls.Add(this.DTPFechaNacimiento);
             this.GBDatosPersonales.Controls.Add(this.TXBApellidoPat);
             this.GBDatosPersonales.Controls.Add(this.LBLSexo);
             this.GBDatosPersonales.Controls.Add(this.LBLApellidoMat);
@@ -256,6 +262,13 @@ namespace ProyectoDiagnosticoDesktop
             this.GBDatosFiscales.TabStop = false;
             this.GBDatosFiscales.Text = "Datos Fiscales";
             // 
+            // TXBRFC
+            // 
+            this.TXBRFC.Location = new System.Drawing.Point(15, 38);
+            this.TXBRFC.Name = "TXBRFC";
+            this.TXBRFC.Size = new System.Drawing.Size(175, 20);
+            this.TXBRFC.TabIndex = 14;
+            // 
             // TXBEmail
             // 
             this.TXBEmail.Location = new System.Drawing.Point(266, 292);
@@ -272,12 +285,13 @@ namespace ProyectoDiagnosticoDesktop
             this.LBLEmail.TabIndex = 18;
             this.LBLEmail.Text = "Email";
             // 
-            // TXBRFC
+            // panel1
             // 
-            this.TXBRFC.Location = new System.Drawing.Point(15, 38);
-            this.TXBRFC.Name = "TXBRFC";
-            this.TXBRFC.Size = new System.Drawing.Size(175, 20);
-            this.TXBRFC.TabIndex = 14;
+            this.panel1.Controls.Add(this.DTPFechaNacimiento);
+            this.panel1.Location = new System.Drawing.Point(156, 74);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(120, 27);
+            this.panel1.TabIndex = 13;
             // 
             // Cliente
             // 
@@ -301,6 +315,7 @@ namespace ProyectoDiagnosticoDesktop
             this.GBDatosPersonales.PerformLayout();
             this.GBDatosFiscales.ResumeLayout(false);
             this.GBDatosFiscales.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -332,5 +347,6 @@ namespace ProyectoDiagnosticoDesktop
         private System.Windows.Forms.TextBox TXBEmail;
         private System.Windows.Forms.Label LBLEmail;
         private System.Windows.Forms.TextBox TXBRFC;
+        private System.Windows.Forms.Panel panel1;
     }
 }
